@@ -1,0 +1,83 @@
+Deer Harvest Rates  
+========================================================
+author: IdahoGal
+date: `r date()`
+transition: rotate
+
+
+
+
+
+<small>
+
+
+Coursera Data Products Class  
+Data Science Specialization
+</small>
+
+App Overview
+========================================================
+
+This Shiny app is used to calculate deer harvest for Idaho
+Fish & Game and has the following characterisitcs:
+- Uses 12 publically available data sets from Idaho Fish & Game
+- Allows users to specify the Year of interest
+- Is based on these variables:  Harvest numbers, Hunter numbers
+- Uses RStudio Shiny for app development & deployment
+- Uses RPubs for slide publication
+
+Application Features
+========================================================
+The application includes the following features:  
+- User selectable variable (Year)
+- Based on the Year, the data set is dynamically selected
+  and processed 
+- Navigation lets the user tab through three separate
+  outputs including success metric, data set summary,
+  data plot, and top 20 data set rows
+- server.R reads in and prepares 12 data sets, calculates
+  the harvest metric, selects the appropriate data set based
+  on the Year selection, and plots the data
+ 
+ 
+Data Summary (2001 - 2013)
+========================================================
+
+```{r, echo=FALSE}
+library(ggplot2)
+ds1 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2001&method=&filetype=csv")
+ds1 <- subset(ds1, ds1$TakeMethod != "All Weapons Combined")
+ds2 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2002&method=&filetype=csv")
+ds2 <- subset(ds2, ds2$TakeMethod != "All Weapons Combined")
+ds3 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2003&method=&filetype=csv")
+ds3 <- subset(ds3, ds3$TakeMethod != "All Weapons Combined")
+ds4 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2004&method=&filetype=csv")
+ds4 <- subset(ds4, ds4$TakeMethod != "All Weapons Combined")
+
+# Taking too long to render, so did not include these data sets
+#ds5 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2005&method=&filetype=csv")
+#ds5 <- subset(ds5, ds5$TakeMethod != "All Weapons Combined")
+#ds6 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2006&method=&filetype=csv")
+#ds6 <- subset(ds6, ds6$TakeMethod != "All Weapons Combined")
+#ds7 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2007&method=&filetype=csv")
+#ds7 <- subset(ds7, ds7$TakeMethod != "All Weapons Combined")
+#ds8 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2008&method=&filetype=csv")
+#ds8 <- subset(ds8, ds8$TakeMethod != "All Weapons Combined")
+#ds9 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2009&method=&filetype=csv")
+#ds9 <- subset(ds9, ds9$TakeMethod != "All Weapons Combined")
+#ds10 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2010&method=&filetype=csv")
+#ds10 <- subset(ds10, ds10$TakeMethod != "All Weapons Combined")
+#ds11 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2011&method=&filetype=csv")
+#ds11 <- subset(ds11, ds11$TakeMethod != "All Weapons Combined")
+#ds12 <- read.csv("http://fishandgame.idaho.gov/ifwis/huntplanner/stats.aspx?season=general&game=deer&yr=2012&method=&filetype=csv")
+#ds12 <- subset(ds12, ds12$TakeMethod != "All Weapons Combined")
+combineData <- rbind(ds1, ds2, ds3, ds4)
+ggplot(data=combineData, aes(x=TakeMethod, fill = factor(TakeMethod), y=Harvest)) +
+        geom_bar(stat="identity") +  
+        xlab("Method") + ylab("Harvest Count") + labs(title="Method vs. Count") 
+```
+TRY IT!
+========================================================
+TRY OUT THE APP Here:  https://idahogal.shinyapps.io/ClassProjShiny/
+
+
